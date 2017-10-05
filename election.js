@@ -23,7 +23,23 @@ document.addEventListener("DOMContentLoaded", function() {
       votes.innerHTML = ' Votes: ' + candidates[i]['votes'];
 
       var lineBreak = document.createElement('br');
+
       var voteForm = document.createElement('form');
+      voteForm.action = "https://bb-election-api.herokuapp.com/vote";
+      voteForm.method = "POST";
+
+      var hiddenInput = document.createElement('input');
+      hiddenInput.value = candidates[i]['name'];
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = 'name';
+
+      voteForm.appendChild(hiddenInput);
+
+      var voteButton = document.createElement('button');
+      voteButton.addEventListener('click', castVote);
+
+      voteButton.innerHTML = 'Place your vote!'
+      voteForm.appendChild(voteButton);
 
       candidate.appendChild(name);
       candidate.appendChild(votes);
@@ -32,6 +48,19 @@ document.addEventListener("DOMContentLoaded", function() {
       allCandidates.appendChild(candidate);
       allCandidates.appendChild(lineBreak);
     }
+
+    function castVote() {
+      console.log('vote button was clicked');
+    }
+
   });
+
+
+
+  // $.ajax({
+  //   url: "https://bb-election-api.herokuapp.com/vote"
+  //   method: "POST",
+  //   dataType: "JSON"
+  // })
 
 });
